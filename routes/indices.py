@@ -6,7 +6,7 @@ indice = APIRouter()
 
 @indice.get("/indice")
 async def getIndice():
-    with conn.cursor() as mycursor:
+    with conn.cursor(dictionary=True) as mycursor:
         mycursor.execute("select * from valores_usuales")
         rst = mycursor.fetchall()
     
