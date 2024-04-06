@@ -25,7 +25,5 @@ app.add_middleware(
 def root():
     return {"mensaje":"hola a Rodrigo"}
 
-
-
 app.include_router(indice)
 app.include_router(actos)
