@@ -6,7 +6,7 @@ from fastapi.middleware.cors import CORSMiddleware
 app = FastAPI()
 
 
-origins = ['http://localhost:3000']
+origins = ['http://localhost:3000', 'https://lexnotario.netlify.app']
 
 app.add_middleware(
     CORSMiddleware,
@@ -23,7 +23,7 @@ app.add_middleware(
 
 @app.get("/")
 def root():
-    return {"mensaje":"hola a Rodrigo"}
+    return {"mensaje":"C:\Users\Usuario\OneDrive\ProyectoWEB\notario-tools\backend\mysql-fastapi"}
 
 app.include_router(indice)
 app.include_router(actos)
