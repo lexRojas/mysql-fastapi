@@ -23,7 +23,7 @@ app.add_middleware(
 
 @app.get("/")
 def root():
-    return {"mensaje":"C:\Users\Usuario\OneDrive\ProyectoWEB\notario-tools\backend\mysql-fastapi"}
+    return {"mensaje":"mysql-fastapi"}
 
 app.include_router(indice)
 app.include_router(actos)
