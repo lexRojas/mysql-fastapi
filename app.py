@@ -12,7 +12,7 @@ app = FastAPI()
 
 
 origins = ['http://localhost:3000', 'https://lexnotario.netlify.app/' , 'https://lexnotario.netlify.app/calculos', 'https://lexnotario.netlify.app/reporte' ]
-
+                                     
 app.add_middleware(
     CORSMiddleware,
     allow_origins= origins,
