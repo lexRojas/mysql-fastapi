@@ -2,6 +2,7 @@ from fastapi import FastAPI
 from routes.indices import indice
 from routes.actos   import actos
 from routes.registros import registros
+from routes.getMonto import calculadora
 
 
 
@@ -32,3 +33,4 @@ def root():
 app.include_router(indice)
 app.include_router(actos)
 app.include_router(registros)
+app.include_router(calculadora)
