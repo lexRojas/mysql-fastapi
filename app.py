@@ -11,7 +11,7 @@ from fastapi.middleware.cors import CORSMiddleware
 app = FastAPI()
 
 
-origins = ['http://localhost:3000', 'https://lexnotario.netlify.app/' , 'https://lexnotario.netlify.app/calculos', 'https://lexnotario.netlify.app/reporte' ]
+origins = ['http://localhost:3000', 'https://lexnotario.netlify.app/'  ]
                                      
 app.add_middleware(
     CORSMiddleware,
