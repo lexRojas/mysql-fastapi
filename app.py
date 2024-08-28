@@ -3,6 +3,7 @@ from routes.indices import indice
 from routes.actos   import actos
 from routes.registros import registros
 from routes.getMonto import calculadora
+from routes.users import user
 
 
 
@@ -34,3 +35,4 @@ app.include_router(indice)
 app.include_router(actos)
 app.include_router(registros)
 app.include_router(calculadora)
+app.include_router(user)
