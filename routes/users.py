@@ -10,7 +10,7 @@ async def geActos(idlogin = ""):
         if (idlogin==""):
           return None
         else:
-          sql = "select * from usuario where login ="+ str(idlogin)
+          sql = "select * from usuario where login ='"+ str(idlogin)+"'"
         cursor.execute(sql)
         result = cursor.fetchall()
         return(result)
