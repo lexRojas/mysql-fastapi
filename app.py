@@ -29,7 +29,7 @@ app.add_middleware(
 
 @app.get("/")
 def root():
-    return {"mensaje":"mysql-fastapi"}
+    return {"mensaje":"mysql-fastapi ver 30-08-2024-18:39"}
 
 app.include_router(indice)
 app.include_router(actos)
