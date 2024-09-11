@@ -7,7 +7,7 @@ indice = APIRouter()
 
 
 @indice.get("/indice")
-async def getIndice():
+async def getIndice(version = 0):
     with conn.cursor(dictionary=True) as mycursor:
         mycursor.execute("select SQL_NO_CACHE * from valores_usuales")
         rst = mycursor.fetchall()
