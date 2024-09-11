@@ -17,11 +17,12 @@ async def getIndice():
 
 
 @indice.get("/indice_by_dates")
-async def getIndiceByDates(fecha_inicio:date=None, fecha_final:date=None):
+async def getIndiceByDates(fecha_inicio:date=None, fecha_final:date=None, version= int):
     with conn.cursor(dictionary=True) as mycursor:
 
-        sql = "select SQL_NO_CACHE * from valores_usuales where fecha between %s and %s"
+        sql = "select SQL_NO_CACHE *, %s from valores_usuales where fecha between %s and %s"
         params= [
+                version,
                 fecha_inicio, 
                 fecha_final
         ]
