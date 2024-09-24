@@ -6,7 +6,7 @@ from sqlalchemy.orm import sessionmaker, selectinload
 from sqlalchemy.future import select 
 from contextlib import asynccontextmanager
 
-from models.models import User, ValoresUsuales,Registro ,Timbre, Tarifario, Acto,Base, RegistroActo, RangoTimbre, Honorarios, Variables, User
+from models.models import User, ValoresUsuales,Registro ,Timbre, Tarifario, Acto,Base, RegistroActo, RangoTimbre, Honorarios, Variables
 from schemas.schemas import UserCreate,ValoresUsualesCreate, RegistroCreate, ActoCreate 
 
 
@@ -78,6 +78,23 @@ async def read_users(db: AsyncSession = Depends(get_db)):
     result = await db.execute(select(User))
     users = result.scalars().all()
     return users
+
+@app.get("/users_login")
+async def getUser(idlogin = None, db: AsyncSession = Depends(get_db)):
+    if(idlogin):
+        stmt = select(User).where(User.email == idlogin)
+        rows = await db.execute(stmt)
+        result = rows.scalar()
+        
+        if(result):
+            result = {"value":True}
+        else:
+            result = {"value":False}
+            
+        valores = result
+    else:
+        valores = None
+    return(valores)
 
 #Ruta para crear un registro en el indice
 @app.post("/indice/")
@@ -327,14 +344,4 @@ async def get_monto(id_acto = None, monto=0, db: AsyncSession = Depends(get_db))
     return(detalle_tarifas)
 
 
-@app.get("/users")
-async def getUser(idlogin = None, db: AsyncSession = Depends(get_db)):
-    if(idlogin):
-        
-        stmt = select(User).where(User.email == idlogin)
-        rows = await db.execute(stmt)
-        result = rows.scalar().email
-        valores = result
-    else:
-        valores = None
-    return(valores)
+

@@ -1,5 +1,5 @@
 from sqlalchemy.orm import sessionmaker, declarative_base, relationship, Mapped
-from sqlalchemy import Column, Integer, String, BigInteger, Date, Double,  Float, ForeignKey, UniqueConstraint, Index
+from sqlalchemy import Column, Integer, String, BigInteger, Date, Double,  Float, ForeignKey 
 
 
 # Modelo base de SQLAlchemy
@@ -117,14 +117,3 @@ class Variables(Base):
     valor = Column(Float, nullable=True)
     
     
-class User(Base):
-    __tablename__ = 'users'
-
-    id = Column(Integer, primary_key=True, autoincrement=True, index=True)
-    name = Column(String(50), nullable=True, index=True)
-    email = Column(String(100), nullable=True, unique=True, index=True)
-
-    __table_args__ = (
-        UniqueConstraint('email', name='ix_users_email'),
-        Index('ix_users_name', 'name')
-    )
