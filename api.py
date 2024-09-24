@@ -74,7 +74,7 @@ async def get_db():
 async def root():
     miRoot = {
         "version":"1.0",
-        "detalle":"usa SQLAlchemy"
+        "detalle":"usa SQLAlchemy and CORS"
         }
     return miRoot
 
