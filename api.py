@@ -1,6 +1,6 @@
 import json
 from datetime import date
-from fastapi import FastAPI, Depends, HTTPException, 
+from fastapi import FastAPI, Depends, HTTPException
 from sqlalchemy.ext.asyncio import AsyncSession, create_async_engine
 from sqlalchemy.orm import sessionmaker, selectinload
 from sqlalchemy.future import select 
