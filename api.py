@@ -1,10 +1,12 @@
 import json
 from datetime import date
-from fastapi import FastAPI, Depends, HTTPException
+from fastapi import FastAPI, Depends, HTTPException, 
 from sqlalchemy.ext.asyncio import AsyncSession, create_async_engine
 from sqlalchemy.orm import sessionmaker, selectinload
 from sqlalchemy.future import select 
 from contextlib import asynccontextmanager
+
+from fastapi.middleware.cors import CORSMiddleware
 
 from models.models import User, ValoresUsuales,Registro ,Timbre, Tarifario, Acto,Base, RegistroActo, RangoTimbre, Honorarios, Variables, Usuario
 from schemas.schemas import UserCreate,ValoresUsualesCreate, RegistroCreate, ActoCreate 
@@ -46,6 +48,20 @@ async def lifespan(app: FastAPI):
 
 # Crear la aplicación FastAPI
 app = FastAPI(lifespan=lifespan)
+
+
+# Defino el CORS para acceso desde mi app netlify 
+origins = ['*','http://localhost:3000', 'https://lexnotario.netlify.app']
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins= origins,
+    allow_credentials=True,
+    allow_methods=['*'],
+    allow_headers=['*']
+)
+
+
 
 # Dependencia para obtener la sesión de la base de datos
 async def get_db():
