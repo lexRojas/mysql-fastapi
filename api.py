@@ -82,7 +82,7 @@ async def read_users(db: AsyncSession = Depends(get_db)):
 @app.get("/users_login")
 async def getUser(idlogin = None, db: AsyncSession = Depends(get_db)):
     if(idlogin):
-        stmt = select(User).where(User.email == idlogin)
+        stmt = select(User).where(User.name == idlogin)
         rows = await db.execute(stmt)
         result = rows.scalar()
         
