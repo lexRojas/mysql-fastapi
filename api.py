@@ -6,7 +6,7 @@ from sqlalchemy.orm import sessionmaker, selectinload
 from sqlalchemy.future import select 
 from contextlib import asynccontextmanager
 
-from models.models import User, ValoresUsuales,Registro ,Timbre, Tarifario, Acto,Base, RegistroActo, RangoTimbre, Honorarios, Variables
+from models.models import User, ValoresUsuales,Registro ,Timbre, Tarifario, Acto,Base, RegistroActo, RangoTimbre, Honorarios, Variables, Usuario
 from schemas.schemas import UserCreate,ValoresUsualesCreate, RegistroCreate, ActoCreate 
 
 
@@ -82,15 +82,9 @@ async def read_users(db: AsyncSession = Depends(get_db)):
 @app.get("/users_login")
 async def getUser(idlogin = None, db: AsyncSession = Depends(get_db)):
     if(idlogin):
-        stmt = select(User).where(User.name == idlogin)
+        stmt = select(Usuario).where(Usuario.login == idlogin)
         rows = await db.execute(stmt)
         result = rows.scalar()
-        
-        if(result):
-            result = {"value":True}
-        else:
-            result = {"value":False}
-            
         valores = result
     else:
         valores = None

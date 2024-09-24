@@ -11,6 +11,17 @@ class User(Base):
     id = Column(Integer, primary_key=True, index=True)
     name = Column(String(50), index=True)
     email = Column(String(100), unique=True, index=True)
+    
+        
+class Usuario(Base):
+    __tablename__ = 'usuario'
+
+    id = Column(Integer, primary_key=True, autoincrement=True)
+    name = Column(String(30), nullable=False)
+    login = Column(String(30), nullable=False)
+    password = Column(String(30), nullable=False)
+    perfil = Column(String(30), nullable=False)
+    
 
 class ValoresUsuales(Base):
     __tablename__ = "valores_usuales"
