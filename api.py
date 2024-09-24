@@ -6,7 +6,7 @@ from sqlalchemy.orm import sessionmaker, selectinload
 from sqlalchemy.future import select 
 from contextlib import asynccontextmanager
 
-from models.models import User, ValoresUsuales,Registro ,Timbre, Tarifario, Acto,Base, RegistroActo, RangoTimbre, Honorarios, Variables
+from models.models import User, ValoresUsuales,Registro ,Timbre, Tarifario, Acto,Base, RegistroActo, RangoTimbre, Honorarios, Variables, User
 from schemas.schemas import UserCreate,ValoresUsualesCreate, RegistroCreate, ActoCreate 
 
 
@@ -325,3 +325,16 @@ async def get_monto(id_acto = None, monto=0, db: AsyncSession = Depends(get_db))
         json_tarifas = {}  # Crea un nuevo diccionario en cada iteración
 
     return(detalle_tarifas)
+
+
+@app.get("/users")
+async def getUser(idlogin = None, db: AsyncSession = Depends(get_db)):
+    if(idlogin):
+        
+        stmt = select(User).where(User.email == idlogin)
+        rows = await db.execute(stmt)
+        result = rows.scalar().email
+        valores = result
+    else:
+        valores = None
+    return(valores)
