@@ -1,5 +1,6 @@
 from pydantic import BaseModel
-
+from typing import Optional
+from datetime import date
 
 # Modelo de Pydantic para la creación de usuarios
 class UserCreate(BaseModel):
@@ -25,7 +26,24 @@ class ValoresUsualesCreate(BaseModel):
     entero: str
     firmas: int
     lugar: str
-    
+
+class ValoresUsualesUpdate(BaseModel):
+    folio_1: Optional[int] = None
+    pag_1: Optional[str]= None
+    folio_2: Optional[int]= None
+    pag_2: Optional[str]= None
+    fecha: Optional[date]= None
+    escritura: Optional[int]= None
+    tomo: Optional[int]= None
+    partes: Optional[str]= None
+    hora: Optional[int]= None
+    minutos: Optional[int]= None
+    contrato: Optional[str]= None
+    entero: Optional[str]= None
+    firmas: Optional[int]= None
+    lugar: Optional[str]= None
+
+
 class RegistroCreate(BaseModel):
     registro_descripcion: str
     

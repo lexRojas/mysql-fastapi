@@ -9,7 +9,7 @@ from contextlib import asynccontextmanager
 from fastapi.middleware.cors import CORSMiddleware
 
 from models.models import User, ValoresUsuales,Registro ,Timbre, Tarifario, Acto,Base, RegistroActo, RangoTimbre, Honorarios, Variables, Usuario
-from schemas.schemas import UserCreate,ValoresUsualesCreate, RegistroCreate, ActoCreate 
+from schemas.schemas import UserCreate,ValoresUsualesCreate, RegistroCreate, ActoCreate , ValoresUsualesUpdate
 
 
 def print_row(row):
@@ -132,6 +132,23 @@ async def create_valores_usuales(indice:ValoresUsualesCreate, db: AsyncSession =
     return db_indice
     
 
+@app.patch("/indice/")
+async def update_valores_usuales(id: int, valores_update: ValoresUsualesUpdate, session: AsyncSession = Depends(get_db)):
+    # Buscar el registro por ID
+    result = await session.execute(select(ValoresUsuales).filter_by(id=id))
+    valor_usual = result.scalars().first()
+
+    if not valor_usual:
+        raise HTTPException(status_code=404, detail="Registro no encontrado")
+
+    # Actualizar solo los campos proporcionados en el PATCH
+    for key, value in valores_update.model_dump(exclude_unset=True).items():
+        setattr(valor_usual, key, value)
+    
+    # Guardar los cambios
+    await session.commit()
+
+    return {"message": "Registro actualizado exitosamente", "data": valores_update}
 
 # Ruta para obtener todos los indices
 @app.get("/indice/")
