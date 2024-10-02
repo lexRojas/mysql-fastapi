@@ -1,5 +1,5 @@
 from sqlalchemy.orm import sessionmaker, declarative_base, relationship, Mapped
-from sqlalchemy import Column, Integer, String, BigInteger, Date, Double,  Float, ForeignKey 
+from sqlalchemy import Column, Integer, String, BigInteger, Date, Double,  Float, ForeignKey , func
 
 
 # Modelo base de SQLAlchemy
@@ -26,20 +26,20 @@ class Usuario(Base):
 class ValoresUsuales(Base):
     __tablename__ = "valores_usuales"
     id        = Column(BigInteger,primary_key=True, index=True, autoincrement= "auto") 
-    folio_1   = Column(Integer)
-    pag_1     = Column(String(100))
-    folio_2   = Column(Integer)
-    pag_2     = Column(String(100))
-    fecha     = Column(Date)
-    escritura = Column(Integer)
-    tomo      = Column(Integer)
-    partes    = Column(String(200)) 
-    hora      = Column(Integer) 
-    minutos   = Column(Integer)
-    contrato  = Column(String(100))
-    entero    = Column(String(100))
-    firmas    = Column(Integer)
-    lugar     = Column(String(100), index=True )
+    folio_1   = Column(Integer, default= 0)
+    pag_1     = Column(String(100), default="")
+    folio_2   = Column(Integer, default= 0)
+    pag_2     = Column(String(100), default="")
+    fecha     = Column(Date, server_default=func.current_date())
+    escritura = Column(Integer, default= 0)
+    tomo      = Column(Integer, default= 0)
+    partes    = Column(String(200), default="") 
+    hora      = Column(Integer, default= 0) 
+    minutos   = Column(Integer, default= 0)
+    contrato  = Column(String(100), default="")
+    entero    = Column(String(100), default="")
+    firmas    = Column(Integer, default= 0)
+    lugar     = Column(String(100), default="", index=True )
 
 class Registro(Base):
     __tablename__="registro"
