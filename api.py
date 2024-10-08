@@ -157,6 +157,26 @@ async def read_valores_usuales(db: AsyncSession = Depends(get_db)):
     valores = result.scalars().all()
     return valores
 
+
+
+# Ruta para borrar un indice x
+@app.delete("/indice/{id}")
+async def delete_valores_usuales(id: int,  session: AsyncSession = Depends(get_db)):
+    # Buscar el registro en la base de datos
+    result = await session.execute(select(ValoresUsuales).where(ValoresUsuales.id == id))
+    registro = result.scalars().first()
+
+    if registro is None:
+        # Si no se encuentra, levantar una excepción
+        raise HTTPException(status_code=404, detail="Registro no encontrado")
+
+    # Eliminar el registro
+    await session.delete(registro)
+    await session.commit()
+
+    return {"message": "Registro eliminado"}
+
+
 #Ruta para obtener los indices por fecha 
 @app.get("/indice_by_dates")
 async def getIndiceByDates(fecha_inicio:date=None, fecha_final:date=None, db: AsyncSession = Depends(get_db)):
