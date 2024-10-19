@@ -4,6 +4,8 @@ from fastapi import FastAPI, Depends, HTTPException
 from sqlalchemy.ext.asyncio import AsyncSession, create_async_engine
 from sqlalchemy.orm import sessionmaker, selectinload
 from sqlalchemy.future import select 
+from sqlalchemy import desc
+
 from contextlib import asynccontextmanager
 
 from fastapi.middleware.cors import CORSMiddleware
@@ -153,7 +155,7 @@ async def update_valores_usuales(id: int, valores_update: ValoresUsualesUpdate, 
 # Ruta para obtener todos los indices
 @app.get("/indice/")
 async def read_valores_usuales(db: AsyncSession = Depends(get_db)):
-    result = await db.execute(select(ValoresUsuales))
+    result = await db.execute(select(ValoresUsuales).order_by(desc(ValoresUsuales.escritura)))
     valores = result.scalars().all()
     return valores
 
@@ -180,7 +182,7 @@ async def delete_valores_usuales(id: int,  session: AsyncSession = Depends(get_d
 #Ruta para obtener los indices por fecha 
 @app.get("/indice_by_dates")
 async def getIndiceByDates(fecha_inicio:date=None, fecha_final:date=None, db: AsyncSession = Depends(get_db)):
-    result = await db.execute(select(ValoresUsuales).where(ValoresUsuales.fecha.between(fecha_inicio, fecha_final) ))
+    result = await db.execute(select(ValoresUsuales).where(ValoresUsuales.fecha.between(fecha_inicio, fecha_final)).order_by(ValoresUsuales.escritura))
     rows = result.fetchall()
     data = [dict(row._mapping) for row in rows]
     return data  # FastAPI lo convierte automáticamente a JSON
@@ -190,7 +192,7 @@ async def getIndiceByDates(fecha_inicio:date=None, fecha_final:date=None, db: As
 # Ruta que obtiene los registros 
 @app.get("/registros")
 async def getRegistros(db: AsyncSession = Depends(get_db)):
-    result = await db.execute(select(Registro))
+    result = await db.execute(select(Registro).order_by(Registro.registro_descripcion))
     valores = result.scalars().all()
     return valores
 
@@ -211,7 +213,7 @@ async def create_valores_usuales(registro:RegistroCreate, db: AsyncSession = Dep
 async def geActos(idRegistro = None, db: AsyncSession = Depends(get_db)):
     if (idRegistro):
         
-        stmt = select(Acto).join(Acto.registros_x_acto).where(RegistroActo.registro_id_registro==idRegistro)
+        stmt = select(Acto).join(Acto.registros_x_acto).where(RegistroActo.registro_id_registro==idRegistro).order_by(Acto.acto_descripcion)
         
         rows = await db.execute(stmt)
         result = rows.scalars().all()
