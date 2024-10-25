@@ -26,6 +26,8 @@ class ValoresUsualesCreate(BaseModel):
     entero: str
     firmas: int
     lugar: str
+    tomo_registro: int
+    asiento: int
 
 class ValoresUsualesUpdate(BaseModel):
     folio_1: Optional[int] = None
@@ -42,6 +44,8 @@ class ValoresUsualesUpdate(BaseModel):
     entero: Optional[str]= None
     firmas: Optional[int]= None
     lugar: Optional[str]= None
+    tomo_registro: Optional[int] = None
+    asiento: Optional[int] = None
 
 
 class RegistroCreate(BaseModel):

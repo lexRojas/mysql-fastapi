@@ -40,6 +40,8 @@ class ValoresUsuales(Base):
     entero    = Column(String(100), default="")
     firmas    = Column(Integer, default= 0)
     lugar     = Column(String(100), default="", index=True )
+    tomo_registro      = Column(Integer, default = 0)
+    asiento   = Column(Integer, default = 0)
 
 class Registro(Base):
     __tablename__="registro"

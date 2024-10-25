@@ -125,7 +125,9 @@ async def create_valores_usuales(indice:ValoresUsualesCreate, db: AsyncSession =
         minutos     = indice.minutos,
         contrato    = indice.contrato,
         entero      = indice.entero,
-        firmas      = indice.firmas
+        firmas      = indice.firmas,
+        tomo_registro = indice.tomo_registro,
+        asiento = indice.asiento
     )
     
     db.add(db_indice)
