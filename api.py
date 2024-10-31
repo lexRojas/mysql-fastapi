@@ -3,8 +3,8 @@ from datetime import date
 from fastapi import FastAPI, Depends, HTTPException
 from sqlalchemy.ext.asyncio import AsyncSession, create_async_engine
 from sqlalchemy.orm import sessionmaker, selectinload
-from sqlalchemy.future import select 
-from sqlalchemy import desc
+from sqlalchemy.future import select
+from sqlalchemy import desc, and_,or_
 
 from contextlib import asynccontextmanager
 
@@ -185,6 +185,34 @@ async def delete_valores_usuales(id: int,  session: AsyncSession = Depends(get_d
 @app.get("/indice_by_dates")
 async def getIndiceByDates(fecha_inicio:date=None, fecha_final:date=None, db: AsyncSession = Depends(get_db)):
     result = await db.execute(select(ValoresUsuales).where(ValoresUsuales.fecha.between(fecha_inicio, fecha_final)).order_by(ValoresUsuales.escritura))
+    rows = result.fetchall()
+    data = [dict(row._mapping) for row in rows]
+    return data  # FastAPI lo convierte automáticamente a JSON
+
+
+#Ruta para obtener los indices por fecha 
+@app.get("/indice_by_citas")
+async def getIndiceByCitas(escritura:int=0, tomo:int=0, asiento:int=0, db: AsyncSession = Depends(get_db)):
+
+
+    # Crear una lista de condiciones dinámicamente
+    condiciones = []
+
+    if escritura > 0:
+        condiciones.append(ValoresUsuales.escritura == escritura)
+    if tomo > 0:
+        condiciones.append(ValoresUsuales.tomo_registro == tomo)
+    if asiento > 0:
+        condiciones.append(ValoresUsuales.asiento == asiento)
+
+
+
+    result = await db.execute(select(ValoresUsuales).where(and_(*condiciones)).order_by(ValoresUsuales.escritura))
+
+    
+        
+    
+    
     rows = result.fetchall()
     data = [dict(row._mapping) for row in rows]
     return data  # FastAPI lo convierte automáticamente a JSON
