@@ -5,7 +5,7 @@ from databases import Database
 
 # URL de la base de datos MySQL
 # DATABASE_URL = "mysql+asyncmy://rrojas:G30rg1n@@18.221.154.102:3306/notario"
-DATABASE_URL="mysql://admin:G30rg1n4@mysql-187830-0.cloudclusters.net:10072/burbujas"
+DATABASE_URL="mysql://admin:RcKrNVUC@mysql-187830-0.cloudclusters.net:10072/notario"
 
 # Crear el motor asíncrono de SQLAlchemy
 engine = create_async_engine(DATABASE_URL, echo=True)
