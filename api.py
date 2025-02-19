@@ -53,7 +53,7 @@ app = FastAPI(lifespan=lifespan)
 
 
 # Defino el CORS para acceso desde mi app netlify 
-origins = ['*','http://localhost:3000', 'https://lexnotario.netlify.app']
+origins = ['*','http://localhost:3000', 'https://lexnotario.netlify.app', 'https://mysql-fastapi.vercel.app']
 
 app.add_middleware(
     CORSMiddleware,
