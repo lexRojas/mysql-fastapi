@@ -24,7 +24,7 @@ def print_row(row):
 
 # Configuración de la base de datos MySQL asíncrona usando mysql+asyncmy
 # DATABASE_URL = "mysql+asyncmy://rorojas1:C0c*l0c4@18.221.154.102:3306/notario"
-DATABASE_URL="mysql+asyncmy://admin:G30rg1n4@mysql-187830-0.cloudclusters.net:10072/notario"
+DATABASE_URL="mysql+asyncmy://admin:RcKrNVUC@mysql-187830-0.cloudclusters.net:10072/notario"
 # Crear el motor asíncrono de SQLAlchemy
 engine = create_async_engine(DATABASE_URL, echo=True)
 
