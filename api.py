@@ -424,3 +424,11 @@ async def get_monto(id_acto = None, monto=0, db: AsyncSession = Depends(get_db))
 
 
 
+@app.get("/test-db")
+async def test_db():
+    try:
+        async with engine.connect() as conn:
+            await conn.execute("SELECT 1")
+        return {"status": "Conexión exitosa"}
+    except Exception as e:
+        return {"error": str(e)}
