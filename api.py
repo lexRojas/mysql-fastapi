@@ -26,7 +26,10 @@ def print_row(row):
 # DATABASE_URL = "mysql+asyncmy://rorojas1:C0c*l0c4@18.221.154.102:3306/notario"
 DATABASE_URL="mysql+asyncmy://admin:RcKrNVUC@mysql-187830-0.cloudclusters.net:10072/notario"
 # Crear el motor asíncrono de SQLAlchemy
-engine = create_async_engine(DATABASE_URL, echo=True)
+engine = create_async_engine(DATABASE_URL, echo=True, pool_size=5,         # Mantiene hasta 5 conexiones abiertas
+    max_overflow=10,     # Puede abrir hasta 10 conexiones adicionales si es necesario
+    pool_recycle=1800,   # Reciclar conexiones cada 30 minutos para evitar timeouts
+    pool_pre_ping=True  )
 
 # Crear la sesión asíncrona
 async_session = sessionmaker(
